@@ -46,13 +46,13 @@ if uploaded_file:
         query_engine = index.as_query_engine()
 
     question = st.text_input("💬 Ask a question about the PDF")
-    with st.expander("💡 Example Questions to Try on the Sample PDF"):
+with st.expander("💡 Example Questions to Try on the Sample PDF"):
     st.markdown("""
-    - How many days of paid leave are allowed each year?
-    - What is the duration of maternity leave?
-    - Can employees take casual leave?
-    - How many days in advance should leave be applied?
-    - Is paternity leave included in the policy?
+    - How many days of paid leave are allowed each year?  
+    - What is the duration of maternity leave?  
+    - Can employees take casual leave?  
+    - How many days in advance should leave be applied?  
+    - Is paternity leave included in the policy?  
     """)
 
     if st.button("Get Answer") and question:
