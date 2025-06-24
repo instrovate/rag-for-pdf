@@ -12,16 +12,17 @@ os.environ["OPENAI_API_KEY"] = st.secrets["openai_api_key"]
 st.set_page_config(page_title="RAG on PDF", page_icon="📄")
 st.title("📄 RAG Over PDFs (Ask Questions on Uploaded Document)")
 
+# Sample PDF section
 st.subheader("📥 Try with Sample PDF")
 st.markdown(
     """
-    Download this sample PDF to try the demo instantly:  
-    👉 [Click to Download sample_policy_doc.pdf](https://github.com/instrovate/rag-for-pdf/raw/main/sample_policy_doc.pdf)
+    Download a sample document to test the demo:  
+    👉 [Click to download sample_policy_doc.pdf](https://github.com/instrovate/rag-for-pdf/raw/main/sample_policy_doc.pdf)
     """
 )
 
-
-uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+# File upload
+uploaded_file = st.file_uploader("Upload your own PDF file", type=["pdf"])
 
 if uploaded_file:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
@@ -45,16 +46,20 @@ if uploaded_file:
         index = VectorStoreIndex.from_documents(documents, service_context=service_context)
         query_engine = index.as_query_engine()
 
+    # Question input
     question = st.text_input("💬 Ask a question about the PDF")
-with st.expander("💡 Example Questions to Try on the Sample PDF"):
-    st.markdown("""
-    - How many days of paid leave are allowed each year?  
-    - What is the duration of maternity leave?  
-    - Can employees take casual leave?  
-    - How many days in advance should leave be applied?  
-    - Is paternity leave included in the policy?  
-    """)
 
+    # Sample question expander
+    with st.expander("💡 Example Questions to Try on the Sample PDF"):
+        st.markdown("""
+        - How many days of paid leave are allowed each year?  
+        - What is the duration of maternity leave?  
+        - Can employees take casual leave?  
+        - How many days in advance should leave be applied?  
+        - Is paternity leave included in the policy?  
+        """)
+
+    # Run query
     if st.button("Get Answer") and question:
         with st.spinner("🤖 Thinking..."):
             response = query_engine.query(question)
